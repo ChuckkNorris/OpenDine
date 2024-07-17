@@ -1,5 +1,5 @@
 # OpenDine
-Example application demonstrating usage of .NET Core Web API, React, Docker, Docker Compose, and Kubernetes
+Example application demonstrating usage of .NET Core Web API, React, Docker, Docker Compose, and Kubernetes (TEST)
 
 ## Application Description
 - opendine-app - React application which allows users to order food
