@@ -1,0 +1,78 @@
+networks:
+  opendine-net:
+    name: opendine-net
+    driver: bridge
+
+services:
+  opendine-api:
+    build:
+      context: ./OpenDine.Api/
+    # depends_on:
+    #  - opendine-db
+    ports:
+      - "$SUPERHERO_API_HOST_PORT:${SUPERHERO_API_CONTAINER_PORT}" 
+      - "$SUPERHERO_API_HOST_SSL_PORT:$SUPERHERO_API_CONTAINER_SSL_PORT" 
+    # env_file: ./service1/.docker/env/app.${APP_ENV}.env
+    networks:
+      - opendine-net
+    environment:
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_HTTPS_PORT=443
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Cobra1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+    volumes:
+      - $USER_DIRECTORY/microsoft/UserSecrets/:/root/.microsoft/usersecrets
+      - $USER_DIRECTORY/.aspnet/https:/root/.aspnet/https/
+  # opendine-app:
+  #   build:
+  #     context: ./opendine-app/
+  #     dockerfile: ./nginx.Dockerfile
+  #   depends_on:
+  #     - opendine-api
+  #   ports:
+  #     - "$SUPERHERO_APP_HOST_PORT:$SUPERHERO_APP_CONTAINER_PORT" 
+  #   # env_file: ./service2/.docker/env/app.${APP_ENV}.env
+  #   networks:
+  #     - opendine-net
+  # # https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
+  # opendine-db:
+  #   container_name: opendine-db
+  #   image: mcr.microsoft.com/azure-sql-edge
+  #   ports:
+  #     - $SUPERHERO_DB_HOST_PORT:$SUPERHERO_DB_CONTAINER_PORT
+  #   environment:
+  #     - ACCEPT_EULA=1
+  #     - MSSQL_SA_PASSWORD=Cobra1234
+  #   cap_add:
+  #     - "SYS_PTRACE"
+  #   # Create volumes to persist database to local machine so it is not destroyed if container is rebuilt
+  #   volumes:
+  #     - ./data:/var/opt/mssql/data
+  #     - ./log:/var/opt/mssql/log
+  #     - ./secrets:/var/opt/mssql/secrets
+  #   networks:
+  #     - superhero-net
+  #   # Wait for SQL Server to start up, then create SuperheroDb on server
+  #   command: 
+  #     - /bin/bash
+  #     - -c
+  #     - |
+  #       /opt/mssql/bin/sqlservr &
+  #       pid=$$!
+  #       # sleepTime=0;
+  #       echo "Waiting for MS SQL to be available ⏳"
+  #       /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P "Cobra1234" -Q "SET NOCOUNT ON SELECT \"YAY WE ARE UP\" , @@servername"
+  #       is_up=$$?
+  #       # TODO: Prevent infinite loop (&& $sleepTime -lt 0) ((sleepTime+=5))
+  #       while [ $$is_up -ne 0 ] ; do
+  #         echo -e $$(date)
+  #         /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P "Cobra1234" -Q "SET NOCOUNT ON SELECT \"YAY WE ARE UP\" , @@servername"
+  #         is_up=$$?
+  #         sleep 5
+  #       done
+  #       /opt/mssql-tools/bin/sqlcmd -U sa -P "Cobra1234" -l 30 -Q 'CREATE DATABASE OpendineDb'
+  #       echo "All scripts have been executed. Waiting for MS SQL(pid $$pid) to terminate."
+  #       wait $$pid
+
+    
