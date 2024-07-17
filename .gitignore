@@ -1,0 +1,10 @@
+# IDE
+.vs/
+
+# CS Build
+bin/
+obj/
+
+# React Build
+node_modules/
+opendine-app/build
