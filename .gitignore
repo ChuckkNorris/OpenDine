@@ -8,3 +8,8 @@ obj/
 # React Build
 node_modules/
 opendine-app/build
+
+# SQL Edge
+data/
+log/
+secrets/

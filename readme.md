@@ -1,5 +1,5 @@
 # OpenDine
-Example application demonstrating usage of .NET Core Web API, React, Docker, Docker Compose, and Kubernetes (TEST)
+Example application demonstrating usage of .NET Core Web API, React, Docker, Docker Compose, and Kubernetes
 
 ## Application Description
 - opendine-app - React application which allows users to order food
@@ -21,12 +21,12 @@ Docker is a software platform that simplifies the process of building, running, 
   - Windows/PowerShell
     ```
     dotnet dev-certs https -ep "$env:USERPROFILE\.aspnet\https\aspnetapp.pfx"  -p "Cobra1234"
-dotnet dev-certs https --trust
+    dotnet dev-certs https --trust
     ```
   - Mac/Linux
     ```
     dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p "Cobra1234"
-dotnet dev-certs https --trust
+    dotnet dev-certs https --trust
     ```
 
 ### Running Docker (Docker Engine)
@@ -53,12 +53,16 @@ The steps in this section are to manually start the Docker Engine in case of a m
     > This will setup and run the Superhero DB (Azure SQL Edge), the Superhero.Api, and the superhero-app locally
 3. After that completes, press `CTRL+C` to stop them; we need to set up the DB on the SQL Server instance that was created
 4. Open Azure Data Studio and create a "New Connection" with the following details, then click Connect:
-    - Connection type: Microsoft SQL Server
-    - Server: localhost,1433
-    - User name: sa
-    - Password: Cobra1234
-    - Database: Master or default (whichever is available)
-    - Name: SuperheroDb_Local
+    - Connection String:
+      - `Server=tcp:127.0.0.1,1433;Database=OpendineDb;User Id=sa;Password=Cobra1234;TrustServerCertificate=yes;`
+        > NOTE: You may be able to use `localhost` instead of `127.0.0.1` depending on how Docker is installed (e.g. WSL2 w/ Docker Engine only vs. Docker Desktop)
+    - Manual Connection:
+      - Connection type: Microsoft SQL Server
+      - Server: tcp:127.0.0.1,1433
+      - User name: sa
+      - Password: Cobra1234
+      - Database: Master or default (whichever is available)
+      - Name: OpendineDb Local
 5. In the connections pane, right-click the SuperheroDb_Local connection and click "New Query"
 6. Create the SuperheroDb database by typing the following, then click "Run":
     ```
@@ -68,7 +72,7 @@ The steps in this section are to manually start the Docker Engine in case of a m
     ```
     dotnet tool install --global dotnet-ef
     ```
-8. CD into the `Superhero.Api/` directory and scaffold the code-first SuperheroDB schema:
+8. CD into the `Opendine.Api/` directory and scaffold the code-first SuperheroDB schema:
     ```
     dotnet ef database update
     ```
