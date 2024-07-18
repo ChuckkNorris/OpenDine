@@ -24,18 +24,18 @@ services:
     volumes:
       - $USER_DIRECTORY/microsoft/UserSecrets/:/root/.microsoft/usersecrets
       - $USER_DIRECTORY/.aspnet/https:/root/.aspnet/https/
-  # opendine-app:
-  #   build:
-  #     context: ./opendine-app/
-  #     dockerfile: ./nginx.Dockerfile
-  #   depends_on:
-  #     - opendine-api
-  #   ports:
-  #     - "$OPENDINE_APP_HOST_PORT:$OPENDINE_APP_CONTAINER_PORT" 
-  #   # env_file: ./service2/.docker/env/app.${APP_ENV}.env
-  #   networks:
-  #     - opendine-net
-  # # https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
+  opendine-app:
+    build:
+      context: ./opendine-app/
+      # dockerfile: ./nginx.Dockerfile
+    depends_on:
+      - opendine-api
+    ports:
+      - "$OPENDINE_APP_HOST_PORT:$OPENDINE_APP_CONTAINER_PORT" 
+    # env_file: ./service2/.docker/env/app.${APP_ENV}.env
+    networks:
+      - opendine-net
+  # https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
   opendine-db:
     container_name: opendine-db
     image: mcr.microsoft.com/azure-sql-edge
