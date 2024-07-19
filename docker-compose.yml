@@ -6,6 +6,7 @@ networks:
 services:
   # OpenDine API
   opendine-api:
+    container_name: opendine-api
     build:
       context: ./OpenDine.Api/
     depends_on:
@@ -19,7 +20,7 @@ services:
     environment:
       - ASPNETCORE_URLS=https://+;http://+
       - ASPNETCORE_HTTPS_PORT=443
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=DockerLocal
       - ASPNETCORE_Kestrel__Certificates__Default__Password=Cobra1234
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
     volumes:
@@ -28,6 +29,7 @@ services:
   
   # OpenDine React App
   opendine-app:
+    container_name: opendine-app
     build:
       context: ./opendine-app/
       # dockerfile: ./nginx.Dockerfile
