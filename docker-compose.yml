@@ -4,6 +4,7 @@ networks:
     driver: bridge
 
 services:
+  # OpenDine API
   opendine-api:
     build:
       context: ./OpenDine.Api/
@@ -24,6 +25,8 @@ services:
     volumes:
       - $USER_DIRECTORY/microsoft/UserSecrets/:/root/.microsoft/usersecrets
       - $USER_DIRECTORY/.aspnet/https:/root/.aspnet/https/
+  
+  # OpenDine React App
   opendine-app:
     build:
       context: ./opendine-app/
@@ -35,6 +38,8 @@ services:
     # env_file: ./service2/.docker/env/app.${APP_ENV}.env
     networks:
       - opendine-net
+  
+  # OpenDineDB - Azure SQL Edge
   # https://learn.microsoft.com/en-us/azure/azure-sql-edge/disconnected-deployment
   opendine-db:
     container_name: opendine-db
@@ -75,5 +80,3 @@ services:
         echo "All scripts have been executed. Waiting for MS SQL(pid $$pid) to terminate."
         wait $$pid
         echo "$$pid has terminated."
-
-    
