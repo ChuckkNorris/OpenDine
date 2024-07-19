@@ -1,8 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import logo from '../../logo.svg';
+import './app.component.css';
+import * as restaurantService from 'modules/restaurants/restaurants.service';
 
 function App() {
+  const [restaurants, setRestaurants] = React.useState<any[]>([]);
+  useEffect(() => {
+    restaurantService.getRestaurants().then((data) => {
+      console.warn("DATA", data);
+      setRestaurants(data);
+  })}, []);
   return (
     <div className="App">
       <header className="App-header">

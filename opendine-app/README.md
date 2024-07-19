@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Libraries
+- [Axios HTTP Client](https://axios-http.com/docs/intro) - Customizable HTTP client for simpler integration with dedicated APIs
+- [Material UI](https://mui.com/material-ui/getting-started/) - React component UI library
+- [React Router](https://reactrouter.com/en/main/start/tutorial) - Support for react application page/url routing
+
 ## Available Scripts
 
 In the project directory, you can run:

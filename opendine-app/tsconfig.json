@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    // Sets root directory for import paths
+    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",
