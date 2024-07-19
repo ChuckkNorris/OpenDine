@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import logo from '../../logo.svg';
 import './app.component.css';
 import * as restaurantService from 'modules/restaurants/restaurants.service';
+import { useLoaderData } from 'react-router-dom';
 
 function App() {
-  const [restaurants, setRestaurants] = React.useState<any[]>([]);
-  useEffect(() => {
-    restaurantService.getRestaurants().then((data) => {
-      console.warn("DATA", data);
-      setRestaurants(data);
-  })}, []);
+  const restaurants = useLoaderData();
+  console.warn("Loader data", restaurants);
+  // const [restaurants, setRestaurants] = React.useState<any[]>([]);
+  // useEffect(() => {
+  //   restaurantService.getRestaurants().then((data) => {
+  //     console.warn("DATA", data);
+  //     setRestaurants(data);
+  // })}, []);
   return (
     <div className="App">
       <header className="App-header">

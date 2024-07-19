@@ -3,15 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './modules/app/app.component';
 import reportWebVitals from './reportWebVitals';
+import { RouterProvider } from 'react-router-dom';
+import { standardLayoutRouter } from 'modules/pages/standard-layout/standard-layout.router';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <RouterProvider router={standardLayoutRouter} />
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>
 );
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <RouterProvider router={router} />
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
