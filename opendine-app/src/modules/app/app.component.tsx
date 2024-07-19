@@ -2,11 +2,15 @@ import React, { useEffect } from 'react';
 import logo from '../../logo.svg';
 import './app.component.css';
 import * as restaurantService from 'modules/restaurants/restaurants.service';
-import { useLoaderData } from 'react-router-dom';
+import { RouterProvider, useLoaderData } from 'react-router-dom';
+import {SnackbarProvider} from 'notistack';
+import StandardLayout from 'modules/pages/standard-layout/standard-layout.component';
+import standardLayoutRouter from 'modules/pages/standard-layout/standard-layout.router';
+
 
 function App() {
-  const restaurants = useLoaderData();
-  console.warn("Loader data", restaurants);
+  // const restaurants = useLoaderData();
+  // console.warn("Loader data", restaurants);
   // const [restaurants, setRestaurants] = React.useState<any[]>([]);
   // useEffect(() => {
   //   restaurantService.getRestaurants().then((data) => {
@@ -14,22 +18,16 @@ function App() {
   //     setRestaurants(data);
   // })}, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+    // Notistack provider to stack toast notifications programatically
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000} onClose={() => 'Error'}>
+      {/* Custom component to enqueue toast messages when observed in state */}
+      {/* <NotificationHandler> */}
+        {/* Primary set of page routes that compose application */}
+        
+        <StandardLayout />
+      {/* </NotificationHandler> */}
+    </SnackbarProvider>
   );
 }
 

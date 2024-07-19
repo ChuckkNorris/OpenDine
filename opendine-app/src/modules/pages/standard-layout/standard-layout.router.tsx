@@ -7,13 +7,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { NotFoundPage } from "modules/pages/not-found.page";
+import HomePage from "modules/pages/home.page";
 
 const Error = () => <div>Something went wrong</div>;
 
 export const standardLayoutRouter = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <HomePage />,
     errorElement: <NotFoundPage />,
     loader: async () => {
       return getRestaurants()
@@ -21,10 +22,10 @@ export const standardLayoutRouter = createBrowserRouter([
     // children: [
     //   {
     //     path: "team",
-    //     element: <Team />,
-    //     loader: teamLoader,
+    //     element: <HomePage />,
     //   },
     // ],
   },
 ]);
 
+export default standardLayoutRouter
