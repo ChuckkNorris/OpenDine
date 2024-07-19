@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddSqlServer<OpenDineContext>(builder.Configuration.GetConnectionString("OpendineDb"));
 
 var app = builder.Build();
+// TODO: Define explicit list of allowed origins
+app.UseCors(opts => opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
