@@ -23,60 +23,17 @@ export const standardLayoutRouter = createBrowserRouter([
           return getRestaurants()
         },
       },
-      // {
-      //   id: "Restaurants",
-      //   path: "/restaurants",
-      //   element: <ManageRestaurantsPage />,
-      //   errorElement: <NotFoundPage />,
-      //   loader: async () => {
-      //     return getRestaurants()
-      //   },
-      // },
       {
         id: "Restaurants",
-        path: "restaurants",
-        element: <StandardLayout />,
+        path: "/restaurants",
+        element: <ManageRestaurantsPage />,
         errorElement: <NotFoundPage />,
         loader: async () => {
           return getRestaurants()
         },
-        children: [
-          {
-            path: "neat",
-            element: <ManageRestaurantsPage />,
-            errorElement: <NotFoundPage />,
-            children: [
-              {
-                id: "Awesome",
-                path: "awesome",
-                element: <HomePage />,
-                loader: async () => {
-                  return getRestaurants()
-                },
-              },
-            ]
-          }
-        ]
-      }
+      },
     ],
   },
-  // {
-  //   id: "Restaurants",
-  //   path: "/restaurants",
-  //   element: <ManageRestaurantsPage />,
-  //   errorElement: <NotFoundPage />,
-  //   loader: async () => {
-  //     return getRestaurants()
-  //   },
-  // },
-  // {
-  //   path: "/restaurants",
-  //   element: <ManageRestaurantsPage />,
-  //   errorElement: <NotFoundPage />,
-  //   loader: async () => {
-  //     return getRestaurants()
-  //   },
-  // }
 ]);
 
 export default standardLayoutRouter
