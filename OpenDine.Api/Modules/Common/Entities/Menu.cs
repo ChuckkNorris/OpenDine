@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenDine.Api.Modules.Common.Entities
 {
-    [Index(nameof(Name))]
-    public class Restaurant
+    public class Menu
     {
         [Key]
+        public int MenuId { get; set; }
+        [ForeignKey(nameof(RestaurantId))]
         public int RestaurantId { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
     }
 }

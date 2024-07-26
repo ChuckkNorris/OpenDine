@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 namespace OpenDine.Api.Modules.Common.Entities
 {
     [Index(nameof(Name))]
-    public class Restaurant
+    public class RestaurantMenu
     {
         [Key]
-        public int RestaurantId { get; set; }
+        public int RestaurantMenuId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
     }
 }
