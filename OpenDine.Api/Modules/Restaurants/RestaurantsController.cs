@@ -13,17 +13,18 @@ namespace OpenDine.Api.Modules.Restaurants
     [Route("api/[controller]")]
     public class RestaurantsController : OpenDineController
     {
-        private readonly OpenDineContext _context;
+        private readonly RestaurantsService _restaurantsService;
 
-        public RestaurantsController(OpenDineContext context)
+        public RestaurantsController(RestaurantsService restaurantsService)
         {
-            this._context = context;
+            this._restaurantsService = restaurantsService;
         }
 
         [HttpPost]
-        public ActionResult<CreateRestaurantResponseDto> CreateRestaurant()
+        public async Task<ActionResult<CreateRestaurantResponseDto>> CreateRestaurant(CreateRestaurantRequestDto createRestaurantRequest)
         {
-            return StatusCode(StatusCodes.Status201Created, new CreateRestaurantResponseDto());
+            var restaurant = await _restaurantsService.CreateRestaurant(createRestaurantRequest);
+            return StatusCode(StatusCodes.Status201Created, new CreateRestaurantResponseDto(restaurant.RestaurantId));
         }
 
         [HttpGet]
