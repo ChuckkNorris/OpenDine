@@ -18,7 +18,7 @@ app.UseCors(opts => opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 // {
     app.UseSwagger();
     app.UseSwaggerUI();
-//
+// }
 
 // app.UseHttpsRedirection();
 app.MapControllers();
