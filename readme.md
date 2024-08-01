@@ -42,6 +42,14 @@ The steps in this section are to manually start the Docker Engine in case of a m
     ```
 
 ### Running Applications in Docker
+1. Set the `USER_DIRECTORY` environment variable to your current location:
+    ```
+    # Windows - PowerShell
+    $env:USER_DIRECTORY = "/mnt/c/Users/LeviFuller(Credera)/"
+
+    # Mac/Linux Terminal
+    export USER_DIRECTORY="~"
+    ```
 1. Open a terminal and navigate (cd) to the `example-apps/` directory
     ```
     cd /my/path/to/example-apps
