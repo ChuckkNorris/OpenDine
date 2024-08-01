@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OpenDine.Api.Modules.Common.Controllers;
+using OpenDine.Api.Application.Controllers;
 using OpenDine.Api.Modules.Menus.Models;
 
 namespace OpenDine.Api.Modules.Menus

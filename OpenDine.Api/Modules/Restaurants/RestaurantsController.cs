@@ -1,7 +1,9 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using OpenDine.Api.Modules.Common.Controllers;
+using OpenDine.Api.Application.Authorization;
+using OpenDine.Api.Application.Controllers;
 using OpenDine.Api.Modules.Common.Entities;
 using OpenDine.Api.Modules.Menus.Models;
 using OpenDine.Api.Modules.Restaurants.Models;
@@ -27,10 +29,18 @@ namespace OpenDine.Api.Modules.Restaurants
             return StatusCode(StatusCodes.Status201Created, new CreateRestaurantResponseDto(restaurant.RestaurantId));
         }
 
-        [HttpGet]
-        public List<Restaurant> GetAllRestaurants()
+        [HttpPost("locations/{restaurantLocationId}")]
+        public async Task<ActionResult<CreateRestaurantResponseDto>> CreateRestaurantLocation(CreateRestaurantLocationRequestDto createRestaurantLocationRequest)
         {
-            return _context.Restaurants.ToList();
+            var restaurant = await _restaurantsService.CreateRestaurantLocation(createRestaurantLocationRequest);
+            return StatusCode(StatusCodes.Status201Created, new CreateRestaurantLocationResponseDto(restaurant.RestaurantLocationId));
+        }
+
+        [HttpGet("{restaurantId}")]
+        public async Task<ActionResult<RestaurantDto>> GetRestaurantById(int restaurantId)
+        {
+            var restaurant = await _restaurantsService.GetRestaurant(restaurantId);
+            return Ok(restaurant);
         }
     }
 }

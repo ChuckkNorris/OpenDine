@@ -8,22 +8,28 @@ namespace OpenDine.Api.Modules.Restaurants
     [TransientService]
     public class RestaurantsService
     {
-        private readonly OpenDineContext _context;
+        private readonly RestaurantsRepository _repo;
 
-        public RestaurantsService(OpenDineContext context)
+        public RestaurantsService(RestaurantsRepository context)
         {
-            this._context = context;
+            this._repo = context;
         }
 
         public async Task<RestaurantDto> CreateRestaurant(CreateRestaurantRequestDto request)
         {
-            var restaurant = new Restaurant
-            {
-                Name = request.Name,
-                Description = request.Description
-            };
-            _context.Restaurants.Add(restaurant);
-            await _context.SaveChangesAsync();
+            var restaurant = await _repo.CreateRestaurant(request);
+            return restaurant.ToRestaurantDto();
+        }
+
+        public async Task<RestaurantLocationDto> CreateRestaurantLocation(CreateRestaurantLocationRequestDto request)
+        {
+            var restaurant = await _repo.CreateRestaurantLocation(request);
+            return restaurant.ToRestaurantLocationDto();
+        }
+
+        public async Task<RestaurantDto> GetRestaurant(int restaurantId)
+        {
+            var restaurant = await _repo.GetRestaurantWithLocationsAsync(restaurantId);
             return restaurant.ToRestaurantDto();
         }
     }

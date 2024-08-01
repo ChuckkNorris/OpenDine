@@ -1,4 +1,5 @@
 using OpenDine.Api.Modules.Common.Entities;
+using OpenDine.Api.Modules.Common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddApplicationServices();
 builder.Services.AddSqlServer<OpenDineContext>(builder.Configuration.GetConnectionString("OpendineDb"));
 
 var app = builder.Build();

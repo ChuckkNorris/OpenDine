@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenDine.Api.Modules.Common.Entities;
 
@@ -11,9 +12,11 @@ using OpenDine.Api.Modules.Common.Entities;
 namespace OpenDine.Api.Migrations
 {
     [DbContext(typeof(OpenDineContext))]
-    partial class OpenDineContextModelSnapshot : ModelSnapshot
+    [Migration("20240801205752_MetadataLengthConstraints")]
+    partial class MetadataLengthConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

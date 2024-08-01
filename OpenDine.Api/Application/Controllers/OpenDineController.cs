@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace OpenDine.Api.Modules.Common.Controllers
+namespace OpenDine.Api.Application.Controllers
 {
     public class OpenDineController : ControllerBase
     {
