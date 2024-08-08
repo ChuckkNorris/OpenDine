@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace OpenDine.Api.Modules.Common.Entities
 {
@@ -13,9 +14,17 @@ namespace OpenDine.Api.Modules.Common.Entities
         public DbSet<Menu> Menus => Set<Menu>();
         public DbSet<MenuItem> MenuItems => Set<MenuItem>();
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            // To avoid plural DB table names inferred from DbSet names - will use class name
+            configurationBuilder.Conventions.Remove(typeof(TableNameFromDbSetConvention));
+            base.ConfigureConventions(configurationBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // To avoid plural DB table names inferred from DbSet names
+            // EF Fluent API to manually describe the database model (relationships, indexes, etc.)
+            // This app uses a combination of the Fluent API and inline entity attributes/annotations to customize schema
             modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
             modelBuilder.Entity<RestaurantLocation>().ToTable("RestaurantLocation");
             modelBuilder.Entity<Menu>().ToTable("Menu");
@@ -28,7 +37,7 @@ namespace OpenDine.Api.Modules.Common.Entities
             //    .HasKey(join => new { join.SuperheroId, join.SuperpowerId });
         }
 
-        // Override all SaveChanges functions to ensure metadata is always set
+        // Override all SaveChanges functions to ensure entity metadata is always set
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             SetEntityMetaData();

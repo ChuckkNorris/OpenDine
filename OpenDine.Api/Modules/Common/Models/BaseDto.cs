@@ -1,5 +1,8 @@
 ﻿namespace OpenDine.Api.Modules.Common.Models
 {
+    /// <summary>
+    /// Custom BaseDto record ineherited by all Entity Framework entities for tracking creation and modification information
+    /// </summary>
     public abstract record BaseDto
     {
         public required DateTime CreatedOn { get; set; }
