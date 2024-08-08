@@ -1,6 +1,6 @@
 import RestaurantsGrid from 'modules/restaurants/restaurants-grid.component';
 import React, { useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import * as restaurantsService from 'modules/restaurants/restaurants.service';
 import { Restaurant } from 'modules/restaurants/models/restaurant.model';
 import StandardLayoutNavigation from 'modules/pages/standard-layout/standard-layout.navigation';
@@ -14,6 +14,7 @@ const ManageRestaurantsPage = () => {
   return (
     <div>
       Restaurants!
+      <Outlet />
       <RestaurantsGrid restaurants={restaurants} />
     </div>
   );

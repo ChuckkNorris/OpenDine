@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import standardLayoutRouter from './standard-layout.router';
 import { ButtonLink } from 'modules/common/components/button-link.component';
 
@@ -12,7 +12,6 @@ export const StandardLayoutNavigation = () => {
       {navMenuOptions.map((navOption, idx) => (
           <ButtonLink
             key={idx}
-            isActive={location.pathname === navOption.path}
             href={navOption.path}>
               {navOption.id}
           </ButtonLink>

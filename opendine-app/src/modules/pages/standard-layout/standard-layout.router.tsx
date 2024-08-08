@@ -16,18 +16,25 @@ export const standardLayoutRouter = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
+        index: true,
         id: "Home",
-        path: "/",
+        path: "/", 
         element: <HomePage />,
       },
       {
         id: "Restaurants",
-        path: "/restaurants",
+        path: "restaurants",
         element: <ManageRestaurantsPage />,
         errorElement: <NotFoundPage />,
         loader: async () => {
           return getRestaurants()
         },
+        children: [
+          {
+            path: ":restaurantId",
+            element: <HomePage/>
+          }
+        ]
       },
     ],
   },
