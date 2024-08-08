@@ -16,12 +16,20 @@ namespace OpenDine.Api.Modules.Restaurants
             this._context = context;
         }
 
-        public async Task<Restaurant> CreateRestaurant(CreateRestaurantRequestDto request)
+        public async Task<Restaurant> CreateRestaurantAsync(CreateRestaurantRequestDto request)
         {
             var restaurant = request.ToRestaurant();
             _context.Restaurants.Add(restaurant);
             await _context.SaveChangesAsync();
             return restaurant;
+        }
+
+        public async Task<IEnumerable<Restaurant>> GetAllRestaurantsAsync()
+        {
+            return await _context.Restaurants
+                .Include(restaurant => restaurant.RestaurantLocations)
+                .ToListAsync()
+                ?? throw new NotFoundException();
         }
 
         public async Task<Restaurant> GetRestaurantWithLocationsAsync(int restaurantId)

@@ -8,11 +8,9 @@ export const restaurantLoader = async () => {
 }
 
 const HomePage = () => {
-  const restaurants = useLoaderData() as Restaurant[];
   return (
     <div>
       Home!
-      <RestaurantsGrid restaurants={restaurants} />
     </div>
   );
 }

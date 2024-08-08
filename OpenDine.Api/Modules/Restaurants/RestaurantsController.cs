@@ -22,6 +22,13 @@ namespace OpenDine.Api.Modules.Restaurants
             this._restaurantsService = restaurantsService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<RestaurantDto>> GetAllRestaurants()
+        {
+            var restaurant = await _restaurantsService.GetAllRestaurants();
+            return Ok(restaurant);
+        }
+
         [HttpPost]
         public async Task<ActionResult<CreateRestaurantResponseDto>> CreateRestaurant(CreateRestaurantRequestDto createRestaurantRequest)
         {

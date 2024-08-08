@@ -19,9 +19,6 @@ export const standardLayoutRouter = createBrowserRouter([
         id: "Home",
         path: "/",
         element: <HomePage />,
-        loader: async () => {
-          return getRestaurants()
-        },
       },
       {
         id: "Restaurants",

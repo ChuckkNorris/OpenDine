@@ -17,7 +17,7 @@ namespace OpenDine.Api.Modules.Restaurants
 
         public async Task<RestaurantDto> CreateRestaurant(CreateRestaurantRequestDto request)
         {
-            var restaurant = await _repo.CreateRestaurant(request);
+            var restaurant = await _repo.CreateRestaurantAsync(request);
             return restaurant.ToRestaurantDto();
         }
 
@@ -31,6 +31,12 @@ namespace OpenDine.Api.Modules.Restaurants
         {
             var restaurant = await _repo.GetRestaurantWithLocationsAsync(restaurantId);
             return restaurant.ToRestaurantDto();
+        }
+
+        public async Task<IEnumerable<RestaurantDto>> GetAllRestaurants()
+        {
+            var restaurants = await _repo.GetAllRestaurantsAsync();
+            return restaurants.Select(restaurant => restaurant.ToRestaurantDto());
         }
     }
 }
