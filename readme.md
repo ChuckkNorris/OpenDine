@@ -87,7 +87,18 @@ The steps in this section are to manually start the Docker Engine in case of a m
 9. From the `example-apps/` directory, run `docker compose up`
     - Access the React app from `http://localhost:3000`
     - API docs can be accessed from `https://localhost:5001/swagger`
-
+### Development Process
+## Adding Migrations
+1. Create or update an Entity Framework entity
+1. Generate the migration file
+    ```
+    dotnet ef migrations add {MigrationNameHere}
+    ```
+1. With the local database running, apply the migration to update the DB schema
+    ```
+    dotnet ef database update
+    ```
+    > NOTE: The ASPNETCORE_ENVIRONMENT variable will determine which appsettings configuration is used (e.g. dev vs prod DB connection) when applying the migration
 
 ### TODOS
 1. Automate creation of SuperheroDb after SQL server is running initially
