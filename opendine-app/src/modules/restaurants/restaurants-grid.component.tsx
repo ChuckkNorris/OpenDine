@@ -1,6 +1,6 @@
 import React, { Component, ComponentProps, useEffect } from 'react';
 import * as ReactDOM from "react-dom";
-import { Restaurant } from "./models/restaurant.model";
+import { RestaurantDto } from "./models/restaurant.model";
 import { Grid, Paper } from '@mui/material';
 import RestaurantCard from './restaurant-card.component';
 
@@ -9,7 +9,7 @@ import { useLoaderData } from 'react-router-dom';
 
 
 export interface RestaurantGridProps {
-  restaurants: Restaurant[];
+  restaurants: RestaurantDto[];
 }
 
 const RestaurantsGrid = ({restaurants}: RestaurantGridProps) => {

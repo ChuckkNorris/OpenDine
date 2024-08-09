@@ -1,9 +1,9 @@
 
-import { Restaurant } from "./models/restaurant.model";
+import { RestaurantDto } from "./models/restaurant.model";
 import { Avatar, Box, Button, Card, CardContent, CardHeader, CardMedia, Paper } from '@mui/material';
 import { red } from '@mui/material/colors';
 
-const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
+const RestaurantCard = ({ restaurant }: { restaurant: RestaurantDto }) => {
   return (
     <Card sx={{ position: 'relative' }}>
     <Box sx={{position: 'absolute'}}>
