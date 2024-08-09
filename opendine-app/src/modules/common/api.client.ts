@@ -44,7 +44,16 @@ const axiosBaseQuery =
     }
   }
 
-const openDineApi = createApi({
+export interface CreateRestaurantRequestDto {
+  name: string;
+  description: string;
+}
+
+export interface CreateRestaurantResponseDto {
+  restaurantId: number;
+}
+
+export const openDineApi = createApi({
   
   baseQuery: axiosBaseQuery({
     baseUrl:env.REACT_APP_API_BASE_URL,
@@ -54,13 +63,18 @@ const openDineApi = createApi({
       query: () => ({ url: '/restaurants', method: 'get' }), //'restaurants',
       // providesTags: ['Post'],
     }),
+    createRestaurant: build.mutation<CreateRestaurantResponseDto[], CreateRestaurantRequestDto>({
+      query: () => ({ url: '/restaurants', method: 'post' }), //'restaurants',
+      // providesTags: ['Post'],
+    }),
     // query: build.query({ query: () => ({ url: '/query', method: 'get' }) }),
     // mutation: build.mutation({
     //   query: () => ({ url: '/mutation', method: 'post' }),
     // }),
   }),
-})
+});
 
+export const { useGetRestaurantsQuery, useCreateRestaurantMutation } = openDineApi;
 
 
 // export const openDineApi = createApi({

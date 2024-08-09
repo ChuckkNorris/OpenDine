@@ -4,6 +4,7 @@ import * as restaurantsService from 'modules/restaurants/restaurants.service';
 import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { Autocomplete, TextField } from '@mui/material';
 import 'modules/pages/manage-restaurants/manage-restaurants.page.css';
+import { useGetRestaurantsQuery } from 'modules/common/api.client';
 
 export const restaurantLoader = async () => {
   return restaurantsService.getRestaurants();
@@ -11,13 +12,15 @@ export const restaurantLoader = async () => {
 
 const ManageRestaurantsPage = () => {
 
+  // const {data, ...rest} = useGetRestaurantsQuery() as any;
+  // console.warn('Request: ', data, rest);
   const restaurants = useLoaderData() as RestaurantDto[];
   const {restaurantId} = useParams();
   
-
-  const options = restaurants.map(rest => ({ label: rest.name, value: rest.name}));
-  const defaultVal = options[0];
-  const defaultValQueryString = { label: '', value: restaurantId };
+  console.log('Restaurants: ', restaurants);
+  const options = restaurants?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, value: rest.restaurantId}));
+  // const defaultVal = options?.[0];
+  // const defaultValQueryString = restaurantId || defaultVal?.value ? { label: '', value: restaurantId ?? defaultVal?.value } : undefined;
 
   return (
     <div>
@@ -25,7 +28,7 @@ const ManageRestaurantsPage = () => {
       {/* disablePortal */}
       <Autocomplete
         className='center-align'
-        defaultValue={defaultValQueryString}
+        defaultValue={options?.[0]}
         options={options}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Select Restaurant" />}
