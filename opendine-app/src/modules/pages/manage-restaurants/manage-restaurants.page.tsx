@@ -1,5 +1,5 @@
 import RestaurantsGrid from 'modules/restaurants/restaurants-grid.component';
-import { Outlet, useLoaderData, useParams } from 'react-router-dom';
+import { Outlet, redirect, useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import * as restaurantsService from 'modules/restaurants/restaurants.service';
 import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { Autocomplete, TextField } from '@mui/material';
@@ -11,16 +11,17 @@ export const restaurantLoader = async () => {
 }
 
 const ManageRestaurantsPage = () => {
-
-  // const {data, ...rest} = useGetRestaurantsQuery() as any;
-  // console.warn('Request: ', data, rest);
   const restaurants = useLoaderData() as RestaurantDto[];
   const {restaurantId} = useParams();
+  const navigate = useNavigate();
   
   console.log('Restaurants: ', restaurants);
-  const options = restaurants?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, value: rest.restaurantId}));
+  const options = restaurants?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, id: rest.restaurantId}));
   // const defaultVal = options?.[0];
-  // const defaultValQueryString = restaurantId || defaultVal?.value ? { label: '', value: restaurantId ?? defaultVal?.value } : undefined;
+  const defaultOption = restaurantId
+    ? options.find(opt => opt.id === +restaurantId)
+    : undefined; //options?.[0];
+  // const defaultValQueryString = restaurantId ? { label: '', value: restaurantId } : undefined;
 
   return (
     <div>
@@ -28,9 +29,10 @@ const ManageRestaurantsPage = () => {
       {/* disablePortal */}
       <Autocomplete
         className='center-align'
-        defaultValue={options?.[0]}
+        defaultValue={defaultOption}
         options={options}
         sx={{ width: 300 }}
+        onChange={(e: any, newValue) => navigate(`/restaurants/${newValue?.id}`, { replace: true })}
         renderInput={(params) => <TextField {...params} label="Select Restaurant" />}
       />
       

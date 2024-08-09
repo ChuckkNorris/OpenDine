@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import openDineApi from 'modules/common/api.client';
+import { openDineApi } from 'modules/common/api.client';
 
 export const store = configureStore({
   reducer: {
