@@ -1,7 +1,7 @@
 import 'modules/app/app.component.css';
 import {SnackbarProvider} from 'notistack';
 import { RouterProvider } from 'react-router-dom';
-import standardLayoutRouter from 'modules/app/standard-layout/standard-layout.router';
+import standardLayoutRouter from 'modules/pages/standard-layout/standard-layout.router';
 import { ThemeProvider } from '@mui/material';
 import theme from 'modules/app/app.theme';
 import { Provider } from 'react-redux';

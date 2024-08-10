@@ -5,7 +5,7 @@ import {
 import { NotFoundPage } from "modules/pages/not-found/not-found.page";
 import HomePage from "modules/pages/home/home.page";
 import ManageRestaurantsPage from "modules/pages/manage-restaurants/manage-restaurants.page";
-import StandardLayout from "modules/app/standard-layout/standard-layout.component";
+import StandardLayout from "modules/pages/standard-layout/standard-layout.component";
 import { openDineApi, useGetRestaurantsQuery, createLoaderQuery } from "modules/common/api.client";
 import { store } from "modules/app/app.store";
 
@@ -26,7 +26,7 @@ export const standardLayoutRouter = createBrowserRouter([
       },
       {
         id: "Restaurants",
-        path: "restaurants",
+        path: 'restaurants/:restaurantId',
         element: <ManageRestaurantsPage />,
         errorElement: <NotFoundPage />,
         loader: createLoaderQuery(() => store.dispatch(openDineApi.endpoints.getRestaurants.initiate())),
@@ -37,11 +37,11 @@ export const standardLayoutRouter = createBrowserRouter([
         //   }
         // ]
       },
-      {
-        path: "restaurants/:restaurantId",
-        element: <ManageRestaurantsPage />,
-        loader: createLoaderQuery(() => store.dispatch(openDineApi.endpoints.getRestaurants.initiate())),
-      }
+      // {
+      //   path: "restaurants/:restaurantId",
+      //   element: <ManageRestaurantsPage />,
+      //   loader: createLoaderQuery(() => store.dispatch(openDineApi.endpoints.getRestaurants.initiate())),
+      // }
     ],
   },
 ]);
