@@ -5,6 +5,8 @@ import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { Autocomplete, TextField } from '@mui/material';
 import 'modules/pages/manage-restaurants/manage-restaurants.page.css';
 import { useGetRestaurantsQuery } from 'modules/common/api.client';
+import { selectRestaurantOptions } from 'modules/restaurants/restaurants.slice';
+import { useAppSelector } from 'modules/common/redux.hooks';
 
 export const restaurantLoader = async () => {
   return restaurantsService.getRestaurants();
@@ -14,12 +16,12 @@ const ManageRestaurantsPage = () => {
   const restaurants = useLoaderData() as RestaurantDto[];
   const {restaurantId} = useParams();
   const navigate = useNavigate();
+  const restaurantOptions = useAppSelector(selectRestaurantOptions);
   
-  console.log('Restaurants: ', restaurants);
-  const options = restaurants?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, id: rest.restaurantId}));
+  // const options = restaurants?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, id: rest.restaurantId}));
   // const defaultVal = options?.[0];
   const defaultOption = restaurantId
-    ? options.find(opt => opt.id === +restaurantId)
+    ? restaurantOptions.find(opt => opt.id === +restaurantId)
     : undefined; //options?.[0];
   // const defaultValQueryString = restaurantId ? { label: '', value: restaurantId } : undefined;
 
@@ -30,7 +32,7 @@ const ManageRestaurantsPage = () => {
       <Autocomplete
         className='center-align'
         defaultValue={defaultOption}
-        options={options}
+        options={restaurantOptions}
         sx={{ width: 300 }}
         onChange={(e: any, newValue) => navigate(`/restaurants/${newValue?.id}`, { replace: true })}
         renderInput={(params) => <TextField {...params} label="Select Restaurant" />}

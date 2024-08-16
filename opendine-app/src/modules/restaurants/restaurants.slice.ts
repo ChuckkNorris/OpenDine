@@ -1,4 +1,7 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "modules/app/app.store";
 import { openDineApi } from "modules/common/api.client";
+import { AutocompleteOption } from "modules/common/models/autocomplete-option.model";
 import { RestaurantDto } from "modules/restaurants/models/restaurant.model";
 
 export interface CreateRestaurantRequestDto {
@@ -27,4 +30,20 @@ export const restaurantApiSlice = openDineApi.injectEndpoints({
   }),
 });
 
+export const restaurantsSlice = createSlice({
+  name: 'restaurants',
+  initialState: {
+    restaurantOptions: [] as AutocompleteOption[],
+  },
+  reducers: {
+
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(restaurantApiSlice.endpoints.getRestaurants.matchFulfilled, (state, action) => {
+      state.restaurantOptions = action.payload?.map(rest => ({ label: `${rest.name} (${rest.restaurantId})`, id: rest.restaurantId }));
+    });
+  },
+});
+
 export const { useGetRestaurantsQuery, useCreateRestaurantMutation } = restaurantApiSlice;
+export const selectRestaurantOptions = (state: RootState) => state.restaurants.restaurantOptions;
