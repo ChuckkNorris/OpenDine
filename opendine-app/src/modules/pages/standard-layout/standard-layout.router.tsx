@@ -6,7 +6,7 @@ import { NotFoundPage } from "modules/pages/not-found/not-found.page";
 import HomePage from "modules/pages/home/home.page";
 import ManageRestaurantsPage from "modules/pages/manage-restaurants/manage-restaurants.page";
 import StandardLayout from "modules/pages/standard-layout/standard-layout.component";
-import { openDineApi, useGetRestaurantsQuery, createLoaderQuery } from "modules/common/api.client";
+import { openDineApi, createLoaderQuery } from "modules/common/api.client";
 import { store } from "modules/app/app.store";
 
 const Error = () => <div>Something went wrong</div>;
@@ -29,7 +29,7 @@ export const standardLayoutRouter = createBrowserRouter([
         path: 'restaurants/:restaurantId',
         element: <ManageRestaurantsPage />,
         errorElement: <NotFoundPage />,
-        loader: createLoaderQuery(() => store.dispatch(openDineApi.endpoints.getRestaurants.initiate())),
+        // loader: createLoaderQuery(() => store.dispatch(openDineApi.endpoints.getRestaurants.initiate())),
         // children: [
         //   {
         //     path: ":restaurantId",

@@ -6,13 +6,18 @@ import { ThemeProvider } from '@mui/material';
 import theme from 'modules/app/app.theme';
 import { Provider } from 'react-redux';
 import { store } from 'modules/app/app.store';
+import { MsalProvider, MsalProviderProps } from '@azure/msal-react';
 
+export interface AppProps {
+  instance: MsalProviderProps['instance'];
+}
 // Defines providers (components which provide functionality throughout the app - child components can access their context),
 // handlers (components which handle certain application functionality, such as notifications),
 // and the root application router (component which renders configured components/elements based on the browser URL/route).
-const App = () => {
+const App = ({ instance }: AppProps) => {
   return (
-    // Provides theme to all child components e.g. `const theme = useTheme()`
+    <MsalProvider instance={instance}>
+    {/* Provides theme to all child components e.g. `const theme = useTheme()` */}
     <ThemeProvider theme={theme}>
       <Provider store={store}>
       {/* Notistack provider to stack toast notifications programatically */}
@@ -27,6 +32,7 @@ const App = () => {
 
       </Provider>
     </ThemeProvider>
+    </MsalProvider>
   );
 }
 
