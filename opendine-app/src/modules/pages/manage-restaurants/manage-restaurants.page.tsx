@@ -5,7 +5,7 @@ import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { Autocomplete, TextField } from '@mui/material';
 import 'modules/pages/manage-restaurants/manage-restaurants.page.css';
 // import { useGetRestaurantsQuery } from 'modules/common/api.client';
-import { selectRestaurantOptions } from 'modules/restaurants/restaurants.slice';
+import { selectRestaurantOptions, useGetRestaurantsQuery } from 'modules/restaurants/restaurants.slice';
 import { useAppSelector } from 'modules/common/redux.hooks';
 
 export const restaurantLoader = async () => {
@@ -13,6 +13,7 @@ export const restaurantLoader = async () => {
 }
 
 const ManageRestaurantsPage = () => {
+  useGetRestaurantsQuery();
   const restaurants = useLoaderData() as RestaurantDto[];
   const {restaurantId} = useParams();
   const navigate = useNavigate();

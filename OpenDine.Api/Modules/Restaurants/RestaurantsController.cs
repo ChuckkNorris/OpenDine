@@ -13,6 +13,8 @@ namespace OpenDine.Api.Modules.Restaurants
 {
     [ApiController]
     [Route("api/[controller]")]
+    // [Authorize]
+    [Authorize(Roles = OpenDineRoles.RestaurantOwner)]
     public class RestaurantsController : OpenDineController
     {
         private readonly RestaurantsService _restaurantsService;

@@ -7,12 +7,14 @@ import type { AxiosRequestConfig, AxiosError } from 'axios';
 import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { getRestaurants } from 'modules/restaurants/restaurants.service';
 import { store } from 'modules/app/app.store';
+import { useMsal } from '@azure/msal-react';
+import { getIdToken } from 'modules/app/auth/auth.helpers';
 
 const env = getEnvironmentConfig();
 
 const axiosBaseQuery =
   (
-    { baseUrl }: { baseUrl: string } = { baseUrl: '' }
+    { baseUrl, defaultHeaders  }: { baseUrl: string, defaultHeaders?: AxiosRequestConfig['headers'] } = { baseUrl: '', defaultHeaders: {} }
   ): BaseQueryFn<
     {
       url: string
@@ -26,12 +28,13 @@ const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, headers }) => {
     try {
+      const idToken = await getIdToken();
       const result = await axios({
         url: baseUrl + url,
         method,
         data,
         params,
-        headers,
+        headers: {'Authorization': `Bearer ${idToken}`, ...headers},
       })
       return { data: result.data }
     } catch (axiosError) {
@@ -55,9 +58,14 @@ export interface CreateRestaurantResponseDto {
 }
 
 export const openDineApi = createApi({
-  
   baseQuery: axiosBaseQuery({
-    baseUrl:env.REACT_APP_API_BASE_URL,
+    baseUrl: env.REACT_APP_API_BASE_URL,
+    defaultHeaders: {
+      // 'Authorization': useMsal().instance.getActiveAccount()?.idToken
+    }
+    // defaultHeaders: {
+    //   'Authorization': `Bearer ${store.getState().auth.token}`
+    // }
   }),
   endpoints: (build) => ({
     // getRestaurants: build.query<RestaurantDto[], void>({
