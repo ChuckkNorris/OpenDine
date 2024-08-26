@@ -14,6 +14,14 @@ Docker is a software platform that simplifies the process of building, running, 
 2. Download and install [.NET 8](https://dotnet.microsoft.com/en-us/download)
     > NOTE: Since we're using Docker, we are only installing .NET to scaffold the database schema using Entity Framework tooling
 3. Download and install [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
+4. Download and install [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli) then install the [Azure CLI](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build)
+    ```
+    // Windows
+    choco install terraform
+    // Mac
+    brew tap hashicorp/tap
+    brew install hashicorp/tap/terraform
+    ```
 
 ### ASP.NET Core Pre-Requisites
 1. Reference [this documentation](https://learn.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-8.0) to generate a development certificate to enable SSL for .NET Core Web API running in Docker container
