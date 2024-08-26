@@ -146,6 +146,30 @@ Abbreviated instructions below.
       export ARM_SUBSCRIPTION_ID="<SUBSCRIPTION_ID>"
       export ARM_TENANT_ID="<TENANT_VALUE>"
       ```
+1. Create a storage account for the TF State file
+   ```
+   az group create -l centralus -n "rg-terraform-state";
+   # Storage Account names must be globally unique, so you may need to change the name here and in the /.terraform/environments/{env}-backend.conf files
+   az storage account create -n "opendineterraform" -g "rg-terraform-state" -l centralus --sku Standard_LRS;
+   az storage container create -n "tfstate" --account-name "opendineterraform"
+   ```
+1. Initialize, plan, apply infrastructure configurations to a cloud environment:
+   ```
+   # Initialize TF against Dev environment
+   terraform init --backend-config=".\environments\dev-backend.conf"
+   # Set initialized DEV environment as workspace called "dev"
+   terraform workspace new dev
+   # Plan/Apply configuration to Dev environment
+   terraform plan --var-file=./environments/dev.tfvars
+   terraform apply --var-file=./environments/dev.tfvars
+
+   # Change to another environment (requires different lock file key)
+   terraform init --backend-config=".\environments\test-backend.conf"
+   terraform plan --var-file=./environments/test.tfvars
+   ```
+
+#### Terraform Environment Cloud State Setup
+Each environment should use 
 
 ### Development Process
 ## Adding Migrations

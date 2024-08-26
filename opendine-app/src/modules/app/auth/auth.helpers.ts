@@ -30,6 +30,7 @@ export const getIdToken = async (): Promise<string | Response> => {
     const result = await client.acquireTokenSilent({scopes: [''], account: defaultAccount});
     return result.idToken;
   } else {
+    // TODO: Need to test failure case, redirect to login if unauthorized
     console.error('No active account! Need to retrigger login process');
     return '';
     // return redirect('/login');

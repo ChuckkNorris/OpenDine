@@ -1,5 +1,11 @@
 # Configure the Azure provider
 terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "opendineterraform"
+    container_name       = "tfstate"
+    key                  = "terraform-opendine.tfstate"
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -16,7 +22,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${var.app_name}-${var.environment}"
-  location = "westus2"
+  location = var.location
   tags = {
     Environment = var.environment
   }

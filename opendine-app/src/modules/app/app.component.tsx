@@ -17,21 +17,20 @@ export interface AppProps {
 const App = ({ instance }: AppProps) => {
   return (
     <MsalProvider instance={instance}>
-    {/* Provides theme to all child components e.g. `const theme = useTheme()` */}
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-      {/* Notistack provider to stack toast notifications programatically */}
-      <SnackbarProvider maxSnack={3} autoHideDuration={3000} onClose={() => 'Error'}>
-        {/* Custom component to enqueue toast messages when observed in state */}
-        {/* <NotificationHandler> */}
-          {/* Primary set of page routes that compose application */}
-          <RouterProvider router={standardLayoutRouter} />
-          {/* <StandardLayout /> */}
-        {/* </NotificationHandler> */}
-      </SnackbarProvider>
-
-      </Provider>
-    </ThemeProvider>
+      {/* Provides theme to all child components e.g. `const theme = useTheme()` */}
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+        {/* Notistack provider to stack toast notifications programatically */}
+        <SnackbarProvider maxSnack={3} autoHideDuration={3000} onClose={() => 'Error'}>
+          {/* Custom component to enqueue toast messages when observed in state */}
+          {/* <NotificationHandler> */}
+            {/* Primary set of page routes that compose application */}
+            <RouterProvider router={standardLayoutRouter} />
+            {/* <StandardLayout /> */}
+          {/* </NotificationHandler> */}
+        </SnackbarProvider>
+        </Provider>
+      </ThemeProvider>
     </MsalProvider>
   );
 }

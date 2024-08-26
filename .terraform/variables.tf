@@ -4,10 +4,13 @@ variable "app_name" {
 }
 
 variable "location" {
-  // NOTE: Only centralus region allowed within OneWorkplace subscription
+  # NOTE: Only centralus region allowed within OneWorkplace subscription
   default = "centralus"
 }
 
+# Environment-specific variables
+# Must be defined in respective ./environments/{env}.tfvars file
 variable "environment" {
-  default = "dev"
+  type = string
+  nullable = false
 }
