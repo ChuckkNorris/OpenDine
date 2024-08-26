@@ -4,5 +4,10 @@ variable "app_name" {
 }
 
 variable "location" {
-  default = "westus2"
+  // NOTE: Only centralus region allowed within OneWorkplace subscription
+  default = "centralus"
+}
+
+variable "environment" {
+  default = "dev"
 }
