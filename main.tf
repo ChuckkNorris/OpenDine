@@ -39,3 +39,9 @@ module "resource_group" {
   environment = var.environment
   app_name    = var.app_name
 }
+
+# TODO
+# KeyVault
+# Sql Server/DB w/ connection string added as secret in KV
+# Azure Kubernetes Service
+
