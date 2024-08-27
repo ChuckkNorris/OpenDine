@@ -13,3 +13,6 @@ opendine-app/build
 data/
 log/
 secrets/
+
+# Terraform
+.terraform/

@@ -27,3 +27,9 @@ resource "azurerm_resource_group" "rg" {
     Environment = var.environment
   }
 }
+
+# module "resource_group" {
+#   source = "./infra/modules/resource-group"
+#   environment = var.environment
+#   app_name = var.app_name
+# }

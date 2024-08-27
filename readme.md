@@ -63,13 +63,13 @@ The steps in this section are to manually start the Docker Engine in case of a m
     ```
     cd /my/path/to/example-apps
     ```
-2. Setup and run the applications using Docker Compose
+1. Setup and run the applications using Docker Compose
     ```
     docker compose up
     ```
     > This will setup and run the Superhero DB (Azure SQL Edge), the Superhero.Api, and the superhero-app locally
-3. After that completes, press `CTRL+C` to stop them; we need to set up the DB on the SQL Server instance that was created
-4. Open Azure Data Studio and create a "New Connection" with the following details, then click Connect:
+1. After that completes, press `CTRL+C` to stop them; we need to set up the DB on the SQL Server instance that was created
+1. Open Azure Data Studio and create a "New Connection" with the following details, then click Connect:
     - Connection String:
       - `Server=tcp:127.0.0.1,1433;Database=OpendineDb;User Id=sa;Password=Cobra1234;TrustServerCertificate=yes;`
         > NOTE: You may be able to use `localhost` instead of `127.0.0.1` depending on how Docker is installed (e.g. WSL2 w/ Docker Engine only vs. Docker Desktop)
@@ -156,7 +156,7 @@ Abbreviated instructions below.
 1. Initialize, plan, apply infrastructure configurations to a cloud environment:
    ```
    # Initialize TF against Dev environment
-   terraform init --backend-config=".\environments\dev-backend.conf"
+   terraform init --backend-config=".\infra\environments\dev-backend.conf"
    # Set initialized DEV environment as workspace called "dev"
    terraform workspace new dev
    # Plan/Apply configuration to Dev environment
