@@ -11,6 +11,6 @@ variable "location" {
 # Environment-specific variables
 # Must be defined in respective ./environments/{env}.tfvars file
 variable "environment" {
-  type = string
+  type     = string
   nullable = false
 }

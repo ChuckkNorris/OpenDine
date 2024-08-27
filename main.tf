@@ -1,3 +1,9 @@
+locals {
+  app_name = "opendine"
+  # environment = "dev"
+  location = "centralus"
+}
+
 # Configure the Azure provider
 terraform {
   backend "azurerm" {
@@ -20,16 +26,16 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-${var.app_name}-${var.environment}"
-  location = var.location
-  tags = {
-    Environment = var.environment
-  }
-}
-
-# module "resource_group" {
-#   source = "./infra/modules/resource-group"
-#   environment = var.environment
-#   app_name = var.app_name
+# resource "azurerm_resource_group" "rg" {
+#   name     = "rg-${var.app_name}-${var.environment}"
+#   location = var.location
+#   tags = {
+#     Environment = var.environment
+#   }
 # }
+
+module "resource_group" {
+  source      = "./infra/modules/resource-group"
+  environment = var.environment
+  app_name    = var.app_name
+}

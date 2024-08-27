@@ -156,7 +156,7 @@ Abbreviated instructions below.
 1. Initialize, plan, apply infrastructure configurations to a cloud environment:
    ```
    # Initialize TF against Dev environment
-   terraform init --backend-config=".\infra\environments\dev-backend.conf"
+   terraform init --backend-config=".\infra\environments\dev-backend.conf" -reconfigure
    # Set initialized DEV environment as workspace called "dev"
    terraform workspace new dev
    # Plan/Apply configuration to Dev environment
