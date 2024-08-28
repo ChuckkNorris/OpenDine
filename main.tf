@@ -1,6 +1,6 @@
 # Local variables to server as global defaults for OpenDine infrastructure
 locals {
-  app_name = "opendine"
+  project_name = "opendine"
   location = "centralus"
 }
 
@@ -34,7 +34,7 @@ provider "azurerm" {
 
 # Resource Group for all OpenDine resources in environment
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-${var.app_name}-${var.environment}"
+  name     = "rg-${var.project_name}-${var.environment}"
   location = var.location
   tags = {
     Environment = var.environment
@@ -45,7 +45,7 @@ resource "azurerm_resource_group" "rg" {
 module "keyvault" {
   source              = "./infra/modules/key-vault"
   environment         = var.environment
-  app_name            = var.app_name
+  project_name            = var.project_name
   resource_group_name = azurerm_resource_group.rg.name
 }
 
@@ -53,7 +53,7 @@ module "keyvault" {
 module "database" {
   source              = "./infra/modules/database"
   environment         = var.environment
-  app_name            = var.app_name
+  project_name            = var.project_name
   resource_group_name = azurerm_resource_group.rg.name
   keyvault_id         = module.keyvault.keyvault_id
 }
@@ -68,7 +68,7 @@ module "ssh_key" {
 module "kubernetes" {
   source              = "./infra/modules/kubernetes"
   environment         = var.environment
-  app_name            = var.app_name
+  project_name            = var.project_name
   resource_group_name = azurerm_resource_group.rg.name
   ssh_public_key      = module.ssh_key.ssh_public_key
 }

@@ -7,7 +7,7 @@ locals {
 # the azure_resource_type is a unique identifier for the Azure resource type you are creating
 # The resource_name is a reference to this instance of the Azure resource type
 resource "azurerm_mssql_server" "sqlserver" {
-  name                         = "sql-${var.app_name}-${var.environment}"
+  name                         = "sql-${var.project_name}-${var.environment}"
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = "12.0"
@@ -20,7 +20,7 @@ resource "azurerm_mssql_server" "sqlserver" {
 }
 
 resource "azurerm_mssql_database" "sqldb" {
-  name           = "sqldb-${var.app_name}-${var.environment}"
+  name           = "sqldb-${var.project_name}-${var.environment}"
   server_id      = azurerm_mssql_server.sqlserver.id
   collation      = "SQL_Latin1_General_CP1_CI_AS"
   license_type   = "LicenseIncluded"

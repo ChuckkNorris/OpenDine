@@ -1,0 +1,108 @@
+name: "Terraform Apply"
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
+      should_apply:
+        type: boolean
+        required: true
+      # parent_event_name:
+      #   type: string
+      #   required: true
+    secrets:
+      token: 
+        required: true
+
+jobs:
+  terrafrom-plan:
+    name: "Terraform Plan ${{ inputs.project }} ${{ inputs.env }} ${{ inputs.region }}"
+    runs-on: ccoe 
+    outputs:
+      environment: ${{ inputs.region }}-${{ steps.environment-suffix.outputs.value }}-${{ inputs.env }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - uses: dkershner6/switch-case-action@v1
+        id: environment-suffix
+        with:
+          default: "nonprod"
+          conditionals-with-values: |
+            ${{ inputs.project == 'Ops' }} => ops
+            ${{ inputs.project == 'DataWarehouse' }} => dw  
+            ${{ inputs.project == 'DataProcessing' }} => dp
+            ${{ inputs.project == 'IAM' }} => iam
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.9
+      
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -recursive -check
+
+      - name: Terraform Init
+        working-directory: ./environments/${{ inputs.project }}
+        id: init
+        run: terraform init -backend-config=backend-config/${{ inputs.region }}-${{ inputs.env }}-backend.hcl
+
+      - name: Terraform Validate
+        working-directory: ./environments/${{ inputs.project }}
+        id: validate
+        run: terraform validate -no-color
+        
+      - name: Terraform Plan
+        working-directory: ./environments/${{ inputs.project }}
+        id: plan
+        run: terraform plan --var-file env/${{ inputs.region }}-${{ inputs.env }}.tfvars -input=false -out=tfplan-${{ inputs.project }}-${{ inputs.region }}-${{ inputs.env }}
+      
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: tf-plan
+          path: './environments/${{ inputs.project }}/tfplan*'
+
+  terraform-apply:
+    needs: terrafrom-plan
+    name: "Terraform Apply ${{ inputs.project }} ${{ inputs.env }} ${{ inputs.region }}"
+    runs-on: ccoe
+    if: ${{ inputs.should_apply }}
+    environment: ${{ needs.terrafrom-plan.outputs.environment }}
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.9
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: tf-plan
+          path: './environments/${{ inputs.project }}'
+
+      - name: Terraform Init
+        id: init
+        working-directory: ./environments/${{ inputs.project }}
+        run: terraform init -backend-config=backend-config/${{ inputs.region }}-${{ inputs.env }}-backend.hcl
+
+      - name: Terraform Apply
+        working-directory: ./environments/${{ inputs.project }}
+        run: terraform apply -auto-approve -input=false tfplan-${{ inputs.project }}-${{ inputs.region }}-${{ inputs.env }}

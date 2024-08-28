@@ -15,7 +15,7 @@ terraform {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   location            = var.location
-  name                = "aks-${var.app_name}-${var.environment}"
+  name                = "aks-${var.project_name}-${var.environment}"
   resource_group_name = var.resource_group_name
   dns_prefix          = "od" # random_pet.azurerm_kubernetes_cluster_dns_prefix.id
 

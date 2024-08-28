@@ -1,5 +1,5 @@
 # Global variables for OpenDine infrastructure across all environments
-variable "app_name" {
+variable "project_name" {
   type = string
   nullable = false
 }

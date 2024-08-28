@@ -25,7 +25,7 @@ data external account_info {
 # the azure_resource_type is a unique identifier for the Azure resource type you are creating
 # The resource_name is a reference to this instance of the Azure resource type
 resource "azurerm_key_vault" "key_vault" {
-  name                        = "kv-${var.app_name}-${var.environment}"
+  name                        = "kv-${var.project_name}-${var.environment}"
   location                    = var.location
   resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true

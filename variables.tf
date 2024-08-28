@@ -1,5 +1,5 @@
 # Global variables for OpenDine infrastructure across all environments
-variable "app_name" {
+variable "project_name" {
   default = "opendine"
 }
 
@@ -13,4 +13,8 @@ variable "location" {
 variable "environment" {
   type     = string
   nullable = false
+  validation {
+    condition = can(regex("^(dev|test|prod)$", var.environment))
+    error_message = "Environment must be one of 'dev', 'test', or 'prod'"
+  }
 }
