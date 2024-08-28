@@ -43,34 +43,34 @@ resource "azurerm_resource_group" "rg" {
 
 # KeyVault to store secrets for OpenDine resources
 module "keyvault" {
-  source      = "./infra/modules/key-vault"
-  environment = var.environment
-  app_name    = var.app_name
+  source              = "./infra/modules/key-vault"
+  environment         = var.environment
+  app_name            = var.app_name
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 # Azure SQL Server and Database w/ connection string added as secret in KV
 module "database" {
-  source      = "./infra/modules/database"
-  environment = var.environment
-  app_name    = var.app_name
+  source              = "./infra/modules/database"
+  environment         = var.environment
+  app_name            = var.app_name
   resource_group_name = azurerm_resource_group.rg.name
-  keyvault_id = module.keyvault.keyvault_id
+  keyvault_id         = module.keyvault.keyvault_id
 }
 
 # azapi_resource_action.ssh_public_key_gen.output.publicKey
 module "ssh_key" {
-  source      = "./infra/modules/ssh"
-  location = var.location
+  source            = "./infra/modules/ssh"
+  location          = var.location
   resource_group_id = azurerm_resource_group.rg.id
 }
 
 module "kubernetes" {
-  source      = "./infra/modules/kubernetes"
-  environment = var.environment
-  app_name    = var.app_name
+  source              = "./infra/modules/kubernetes"
+  environment         = var.environment
+  app_name            = var.app_name
   resource_group_name = azurerm_resource_group.rg.name
-  ssh_public_key = module.ssh_key.ssh_public_key
+  ssh_public_key      = module.ssh_key.ssh_public_key
 }
 
 # TODO
