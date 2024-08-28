@@ -1,6 +1,7 @@
 # Global variables for OpenDine infrastructure across all environments
 variable "app_name" {
-  default = "opendine"
+  type = string
+  nullable = false
 }
 
 variable "location" {
@@ -17,9 +18,5 @@ variable "environment" {
 }
 
 variable "resource_group_name" {
-  type = string
-}
-
-variable "keyvault_id" {
   type = string
 }

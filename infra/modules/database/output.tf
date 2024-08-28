@@ -1,3 +1,3 @@
 output "sql_connection_string" {
-  value = azurerm_mssql_server.sqlserver.connectionstring
+  value = azurerm_key_vault_secret.sql_connection_string.value
 }

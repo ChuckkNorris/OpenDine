@@ -1,6 +1,6 @@
+# Local variables to server as global defaults for OpenDine infrastructure
 locals {
   app_name = "opendine"
-  # environment = "dev"
   location = "centralus"
 }
 
@@ -26,18 +26,30 @@ provider "azurerm" {
   features {}
 }
 
-# resource "azurerm_resource_group" "rg" {
-#   name     = "rg-${var.app_name}-${var.environment}"
-#   location = var.location
-#   tags = {
-#     Environment = var.environment
-#   }
-# }
+# Resource Group for all OpenDine resources in environment
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-${var.app_name}-${var.environment}"
+  location = var.location
+  tags = {
+    Environment = var.environment
+  }
+}
 
-module "resource_group" {
-  source      = "./infra/modules/resource-group"
+# KeyVault to store secrets for OpenDine resources
+module "keyvault" {
+  source      = "./infra/modules/key-vault"
   environment = var.environment
   app_name    = var.app_name
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+# Azure SQL Server and Database w/ connection string added as secret in KV
+module "database" {
+  source      = "./infra/modules/database"
+  environment = var.environment
+  app_name    = var.app_name
+  resource_group_name = azurerm_resource_group.rg.name
+  keyvault_id = module.keyvault.keyvault_id
 }
 
 # TODO
