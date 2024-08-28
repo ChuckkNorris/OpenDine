@@ -17,10 +17,16 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0.2"
     }
+    # azapi = {
+    #   source = "azure/azapi"
+    # }
   }
 
   required_version = ">= 1.1.0"
 }
+
+# provider "azapi" {
+# }
 
 provider "azurerm" {
   features {}
@@ -50,6 +56,21 @@ module "database" {
   app_name    = var.app_name
   resource_group_name = azurerm_resource_group.rg.name
   keyvault_id = module.keyvault.keyvault_id
+}
+
+# azapi_resource_action.ssh_public_key_gen.output.publicKey
+module "ssh_key" {
+  source      = "./infra/modules/ssh"
+  location = var.location
+  resource_group_id = azurerm_resource_group.rg.id
+}
+
+module "kubernetes" {
+  source      = "./infra/modules/kubernetes"
+  environment = var.environment
+  app_name    = var.app_name
+  resource_group_name = azurerm_resource_group.rg.name
+  ssh_public_key = module.ssh_key.ssh_public_key
 }
 
 # TODO
