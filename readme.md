@@ -1,28 +1,59 @@
 # OpenDine
 Example application demonstrating usage of .NET Core Web API, React, Docker, Docker Compose, and Kubernetes
 
+- [OpenDine](#opendine)
+  - [Application Description](#application-description)
+- [Getting Started - Local Development](#getting-started---local-development)
+  - [Pre-Requisites](#pre-requisites)
+  - [Running Applications in Docker](#running-applications-in-docker)
+    - [ASP.NET Setup](#aspnet-setup)
+    - [Running Docker (Docker Engine)](#running-docker-docker-engine)
+    - [Running Applications in Docker](#running-applications-in-docker-1)
+    - [Terraform Setup](#terraform-setup)
+      - [Terraform Environment Cloud State Setup](#terraform-environment-cloud-state-setup)
+    - [Development Process](#development-process)
+  - [Adding Migrations](#adding-migrations)
+    - [TODOS](#todos)
+
 ## Application Description
 - opendine-app - React application which allows users to order food
 - OpenDine.Api - A .NET Core Web API which provides API endpoints for opendine-app
 
-## Running Applications in Docker
-Docker is a software platform that simplifies the process of building, running, managing, and distributing applications by virtualizing the operating system of the host computer. Docker compiles the applications, creates an image of the compiled code, and runs the image within a container in a standard, repeatable way.
+# Getting Started - Local Development
+For local development, the process is to run all application resources in Docker (database, react, .NET) then to run the FE/BE applications alongside their docker counterparts for development.
 
-### Required Tools
+## Pre-Requisites
 1. Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
     > NOTE: Docker Desktop can ONLY be used for education and training purposes, as it requires a license for commercial use at large organizations. Check with your leadership before utilzing Docker Desktop for a client project. Another option is [Podman](https://podman.io/)
-2. Download and install [.NET 8](https://dotnet.microsoft.com/en-us/download)
-    > NOTE: Since we're using Docker, we are only installing .NET to scaffold the database schema using Entity Framework tooling
-3. Download and install [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
-4. Download and install [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli) then install the [Azure CLI](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build)
+1. Download and install [.NET 8](https://dotnet.microsoft.com/en-us/download)
+    > NOTE: Since we're using Docker, we are only installing .NET to scaffold the database schema using Entity Framework tooling and to perform local .NET development
     ```
     # Windows
-    choco install terraform
+    winget install Microsoft.DotNet.SDK.8
+
+    # Mac
+    brew install --cask dotnet-sdk
+    ```
+1. Download and install [Azure Data Studio](https://azure.microsoft.com/en-us/products/data-studio)
+   - This will be used to connect to the database server we are running in Docker
+1. Download and install [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli) then install the [Azure CLI](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build)
+   - This will be used to provision cloud environments used to host OpenDine such as Azure SQL Server, Kubernetes, KeyVault, etc.
+    ```
+    # Windows
+    winget install Hashicorp.Terraform
 
     # Mac
     brew tap hashicorp/tap
     brew install hashicorp/tap/terraform
     ```
+1. Download and install [NodeJS](https://nodejs.org/en)
+   - This will be used for local React development, and to execute aliased scripts via `npm run {scriptName}`
+
+## Running Applications in Docker
+To get up and running quickly, we will build and run the docker containers for the OpenDine applications and their dependencies.
+During normal development activities, developers will use docker compose to spin up all the application resources for local development (such as a local SQL Server DB), that will be referenced by the manually executed application.
+Docker is a software platform that simplifies the process of building, running, managing, and distributing applications by virtualizing the operating system of the host computer. Docker compiles the applications, creates an image of the compiled code, and runs the image within a container in a standard, repeatable way.
+
 
 ### ASP.NET Setup
 1. Reference [this documentation](https://learn.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-8.0) to generate a development certificate to enable SSL for .NET Core Web API running in Docker container

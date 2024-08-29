@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opendine-dev
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: envread-settings
+  namespace: opendine-dev
+data:
+  app.config.json: |-
+    {
+      "environment": "Production",
+      "serviceA": "https://my-apps.google.com/service-a",
+      "serviceB": "https://my-apps.google.com/service-b",
+      "serviceC": "https://my-apps.google.com/service-c",
+      "keyCloakUrl": "sso-dev.keycloak.com",
+      "neato": "https://my-apps.neato.com/awesome123"
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-env-app
+  namespace: opendine-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-env-app
+  template:
+    metadata:
+      labels:
+        app: multi-env-app
+    spec:
+      containers:
+      - name: multi-env-app
+        image: docker.io/chuckknorris/multi-env-app:3
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "400m"
+            memory: "500Mi"
+          requests:
+            cpu: "200m"
+            memory: "250Mi"
+        volumeMounts:
+          - name: envread-volume
+            mountPath: /usr/share/nginx/html/assets/config/
+      volumes:
+      - name: envread-volume
+        configMap:
+          name: envread-settings
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: opendine-app
+  namespace: opendine-dev
+  labels:
+    app: opendine-app
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 31317
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    name: web
+  selector:
+    app: opendine-app

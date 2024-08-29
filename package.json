@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "tf-init-dev": "terraform init --backend-config=infra/environments/dev-backend.conf",
+    "tf-plan-dev": "terraform plan --var-file=infra/environments/dev.tfvars",
+    "tf-apply-dev": "terraform apply --var-file=infra/environments/dev.tfvars"
+  }
+}

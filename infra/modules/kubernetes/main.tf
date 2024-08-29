@@ -3,16 +3,23 @@ terraform {
     azapi = {
       source = "azure/azapi"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.94.0"
+    }
   }
 }
 
-# provider "azapi" {
-# }
+# Azure Container Registery used to store/serve docker images
+# NOTE: This should only exist in a common environment, and should not be created in each environment
+resource "azurerm_container_registry" "acr" {
+  name                = "acr${var.project_name}"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  sku                 = "Basic"
+}
 
-# provider "azurerm" {
-#   features {}
-# }
-
+# Kubernetes Cluster to host dockerized applications
 resource "azurerm_kubernetes_cluster" "k8s" {
   location            = var.location
   name                = "aks-${var.project_name}-${var.environment}"
@@ -25,7 +32,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   default_node_pool {
     name       = "agentpool"
-    vm_size    = "Standard_D2_v2"
+    vm_size    = "Standard_B2s"
+    os_disk_size_gb = 50
     node_count = var.node_count
   }
   linux_profile {
@@ -39,4 +47,12 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
+}
+
+# Role to allow K8s to pull images directly from Azure Container Registry
+resource "azurerm_role_assignment" "aks_acr_role" {
+  principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.acr.id
+  skip_service_principal_aad_check = true
 }
