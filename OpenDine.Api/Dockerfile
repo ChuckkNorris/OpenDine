@@ -9,6 +9,7 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
+RUN apk add --no-cache bash
 ARG ASPNETCORE_URLS=https://+:443,http://+:8080
 EXPOSE 443
 EXPOSE 80

@@ -71,6 +71,7 @@ module "kubernetes" {
   project_name            = var.project_name
   resource_group_name = azurerm_resource_group.rg.name
   ssh_public_key      = module.ssh_key.ssh_public_key
+  node_count = 2
 }
 
 # TODO

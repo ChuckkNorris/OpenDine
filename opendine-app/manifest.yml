@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: opendine-app
-        image: acropendine.azurecr.io/opendine-app:latest
+        image: acropendine.azurecr.io/opendine-app:6
         imagePullPolicy: Always
         resources:
           limits:

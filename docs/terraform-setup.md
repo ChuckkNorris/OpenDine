@@ -43,3 +43,9 @@
     ```
     kubectl get service opendine-app -n opendine-dev --watch
     ```
+1. To open a bash shell for a certain pod and inspect its network or debug
+    ```
+    kubectl get pod -n opendine-dev
+    # Note the pod name from the command above
+    kubectl exec -it -n opendine-dev opendine-api-7d46964d47-5bxxz -- /bin/bash
+    ```
