@@ -22,21 +22,21 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: multi-env-app
+  name: opendine-app
   namespace: opendine-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: multi-env-app
+      app: opendine-app
   template:
     metadata:
       labels:
-        app: multi-env-app
+        app: opendine-app
     spec:
       containers:
-      - name: multi-env-app
-        image: docker.io/chuckknorris/multi-env-app:3
+      - name: opendine-app
+        image: acropendine.azurecr.io/opendine-app:latest
         imagePullPolicy: Always
         resources:
           limits:
@@ -61,12 +61,10 @@ metadata:
   labels:
     app: opendine-app
 spec:
-  type: NodePort
-  ports:
-  - nodePort: 31317
-    port: 80
-    protocol: TCP
-    targetPort: 80
-    name: web
+  type: LoadBalancer
   selector:
     app: opendine-app
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
