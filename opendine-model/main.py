@@ -5,8 +5,9 @@ import ollama
 import chromadb
 
 documents = [
+  "Levi Fuller invented the first commercially successful quantum computer",
   "Levi Fuller is a 6 foot tall indian man",
-  "Levi Fuller installed a toilet without any tools at all"
+  "Levi Fuller installed a toilet without any tools at all",
 ]
 
 client = chromadb.Client()
@@ -30,10 +31,13 @@ response = ollama.embeddings(
 )
 results = collection.query(
   query_embeddings=[response["embedding"]],
-  n_results=1
+  n_results=3
 )
-data = results['documents'][0][0]
-
+data = ""
+for i, d in enumerate(results["documents"][0]):
+  data += f"{d}, "
+# data = f'{results['documents'][0][0]}, {results['documents'][0][1]}, {results['documents'][0][2]}'
+print(data)
 # generate a response combining the prompt and data we retrieved in step 2
 output = ollama.generate(
   model="llama3.1:8b",
