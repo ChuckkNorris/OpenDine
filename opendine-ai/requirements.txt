@@ -3,3 +3,5 @@ langchain_core
 langchain
 beautifulsoup4
 chromadb
+torch
+tiktoken

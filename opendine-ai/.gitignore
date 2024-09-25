@@ -1,0 +1,6 @@
+# Python
+Lib/
+Scripts/
+Include/
+share/
+*.pyc
