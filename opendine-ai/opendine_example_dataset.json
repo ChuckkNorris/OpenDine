@@ -1,0 +1,7 @@
+[
+  {
+    "instruction": "Please provide the menu for the restaurant.",
+    "input": "",
+    "output": "The menu for the restaurant is as follows:\n 1. Chicken Biryani - $10\n 2. Veg Biryani - $8\n 3. Chicken Fried Rice - $12\n 4. Veg Fried Rice - $10\n 5. Chicken Noodles - $15\n 6. Veg Noodles - $12"
+  }
+]

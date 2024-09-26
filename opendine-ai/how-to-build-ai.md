@@ -1,15 +1,51 @@
 # How to Build Enterprise AI
 The goal of this is to teach you the core concepts of AI and to demonstrate an enterprise-grade AI architecture/application
 
+## Incremental Goals
+- Model Training - Create model, train with custom data, store dataset and trained model in Huggingface
+- Augmented Retrieval - Utilize custom, private datastores allowing users to ask questions about proprietary data
+
 ## Core Concepts
 - System Prompts - Provided to LLM to define how it should operate and respond to user prompts
     > A system prompt is an instruction provided by the developers of an AI model. It sets the context, tone, and boundaries for the AI's responses. The system prompt acts as a guiding framework, shaping the behavior and style of the AI throughout the interaction
 - User Prompts - Provided to LLM as a request for it to process and generate a response to
 - Vectors - Sequences of numbers that represent data; the inputs and outputs of models. Vectors transform unstructured data (text, videos) into a format suitable for machine learning models to process
 
-## Stack
-- Data Sources
-- Database
+# Stack
+## Machine Learning Developer Tools
+- Huggingface - Repository (like GitHub) for storing models, datasets, and spaces
+
+## Raw Data Sources
+Raw data that is typically integrated into data store optimized for LLMs - can include SQL DBs, NoSQL DBs, documents, websites or other data that should be fed into an LLM for contextual information
+- Relational DBs - Possible to use "text-to-SQL" models, but migrating data to optimized search provider can be more powerful and efficient (e.g. Solr, Redis)
+- PDF/Word documents - 
+- Websites
+
+## LLM Models
+Generates text responses to user prompts given instructions or other contextual data related to request
+- GPT
+- Llama
+- Grok
+- Gemini
+
+## Embedding Models
+- Nomic Text Embed - Embedding model for representing large text as vectors
+
+## Finetuning Tools
+- Unsloth AI
+- Ollama
+- Lora
+
+## AI Optimized Data Stores
+Intermediate data store for quickly retrieving contextual information about a user's query
+- Redis
+- ChromaDb
+
+## RAG Pipeline Tools
+Used to persist and provide customized information to LLM
+- LangChain
+- LlamaIndex
+- Pytorch
 
 ## Tools
 - [Redis Vector Database?](https://redis.io/docs/latest/develop/get-started/vector-database/)
