@@ -47,5 +47,10 @@ print('slope', (d2 - d1)/h)
 # %%
 a = Value(2.0)
 b = Value(-3.0)
-a + b
+c = Value(10.0)
+d = a*b + c
+
+print('d', d)
+print('d.prev', d._prev)
+print('d._op', d._op)
 # %%
