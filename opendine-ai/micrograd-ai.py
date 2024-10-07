@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from micrograd.value import Value
 # %matplotlib inline
+from micrograd.tracer import draw_dot
 
 # %%
 def f(x):
@@ -45,12 +46,17 @@ print('d1', d1)
 print('d2', d2)
 print('slope', (d2 - d1)/h)
 # %%
-a = Value(2.0)
-b = Value(-3.0)
-c = Value(10.0)
-d = a*b + c
+a = Value(2.0, label='a')
+b = Value(-3.0, label='b')
+c = Value(10.0, label='c')
+e = a*b; e.label = 'e'
+d = e + c; d.label = 'd'
 
 print('d', d)
 print('d.prev', d._prev)
 print('d._op', d._op)
+# %%
+# Draw value nodes
+draw_dot(d)
+
 # %%
