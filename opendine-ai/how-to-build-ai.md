@@ -31,7 +31,7 @@ Generates text responses to user prompts given instructions or other contextual 
 ## Embedding Models
 - Nomic Text Embed - Embedding model for representing large text as vectors
 
-## Finetuning Tools
+## Finetuning / Training Tools
 - Unsloth AI
 - Ollama
 - Lora

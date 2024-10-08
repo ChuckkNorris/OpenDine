@@ -102,18 +102,16 @@ draw_dot(l)
 # Relationship between L and C?
 # dd / dc = 1.0
 # dd / de = 1.0
-d = c + e
-(f(x+h) - f(x)) / h
-((c+h + e) - (c + e)) / h
-(c + h + e - c - e)/h
-h/h
+# d = c + e
+# (f(x+h) - f(x)) / h
+# ((c+h + e) - (c + e)) / h
+# (c + h + e - c - e)/h
+# h/h
 # Local derivative - want to find d at end of graph, only knows it is a plus
 # Plus knows local influence on d and c, and d and e
 # Chain rule in calculus
 # %%
-# Draw value nodes
-
-
+# Draw value nodes2
 
 
 # %%
