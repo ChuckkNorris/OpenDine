@@ -3,18 +3,16 @@ import {blueGrey} from '@mui/material/colors'
 import { Link, NavLink } from "react-router-dom";
 
 export interface ButtonLinkProps {
-  key?: any;
   href: string | undefined;
   isActive?: boolean;
   children: React.ReactNode;
 }
 
-export const ButtonLink = ({href, isActive, children, key}: ButtonLinkProps) => {
+export const ButtonLink = ({href, isActive, children}: ButtonLinkProps) => {
   const theme = useTheme();
   return (
     <NavLink
           to={href as string}
-          key={key}
           >
             {({isActive, isPending, isTransitioning}) => {
                 const background = isActive
