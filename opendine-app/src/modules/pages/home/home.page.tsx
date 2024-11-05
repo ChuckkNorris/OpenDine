@@ -40,7 +40,7 @@ const HomePage = () => {
             </UnauthenticatedTemplate>
         </div>
         <div>
-          <MenuItemForm />
+          <MenuItemForm isConsolidated={false} />
         </div>
     </div>
   );

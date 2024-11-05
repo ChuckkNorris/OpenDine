@@ -1,74 +1,70 @@
-import { Button, Grid2 as Grid, TextField } from '@mui/material';
+import { Button, Grid2 as Grid } from '@mui/material';
 import { TextFormField } from 'modules/common/components/form-fields/text-form-field.component';
-import { FieldValues, FormState, useController, useForm } from 'react-hook-form';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 
 export interface MenuItemFormProps {
+  isConsolidated?: boolean;
 }
 
-{/* <FormControl>
-  <InputLabel htmlFor="my-input">Email address</InputLabel>
-  <Input id="my-input" aria-describedby="my-helper-text" />
-  <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
-</FormControl> */}
+export const MenuItemForm = ({ isConsolidated }: MenuItemFormProps) => {
+  const { register, handleSubmit, control, formState: {isValid, dirtyFields, errors, touchedFields } } = useForm({
+    reValidateMode: 'onChange',
+    mode: 'onBlur',
+  });
 
-export const MenuItemForm = ({}: MenuItemFormProps) => {
-  const { register, handleSubmit, control, formState: {dirtyFields, errors, touchedFields } } = useForm();
-  // const {
-  //   field,
-  //   fieldState: { invalid, isTouched, isDirty },
-  //   formState: { touchedFields, dirtyFields }
-  // } = useController({
-  //   name,
-  //   control,
-  //   rules: { required: true },
-  // });
-  console.log('FORM STATE: ', dirtyFields, errors, touchedFields);
+  const standardFieldSize = useMemo(() => isConsolidated ? { md: 2,  xs: 3 } : { xs: 12, sm: 6, md: 4 }, [isConsolidated]);
+  const standardCtaSize = useMemo(() => isConsolidated ? { md: 2,  xs: 3 } : { xs: 12 }, [isConsolidated]);
+ 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <Grid container spacing={2}>
-        {/* <Grid size={12}>
-          <TextField
-            {...register("name", { required: true })}
-            fullWidth
+        <Grid size={standardFieldSize}>
+          <TextFormField
             label="Name"
             name="name"
-            required
-            variant="outlined"
+            control={control}
+            rules={{ required: "Name is required" }}
           />
-        </Grid> */}
-        <Grid size={12}>
+        </Grid>
+        <Grid size={standardFieldSize}>
           <TextFormField
             name="description"
-            rules={{ required: "Is req'd", minLength: { value: 5, message: "Must be 5 chars long" } }}
+            rules={{ required: "Description is required", minLength: { value: 5, message: "Must be 5 chars long" } }}
             control={control}
-            // formState={{dirtyFields, errors, touchedFields} as FormState<FieldValues>}
-            // helperText={errors['description'] ? "Please enter a description" : "No error"}
+            // helperText="Please enter a description"
             label="Description"
-            // {...register("description", { required: "Please enter a description", minLength: { value: 5, message: "Must be 5 chars long" }})}
-            // required
           />
-          {/* <TextField
-            {...register("description", { required: true })}
-            fullWidth
-            label="Description"
-            name="description"
-            required
-            variant="outlined"
-            helperText={formState.dirtyFields['description'] && "Please enter a description of the item."}
-            error={!!formState.dirtyFields['description']}
-          /> */}
         </Grid>
-        {/* <Grid size={12}>
-          <TextField
-            {...register("price", { required: true })}
-            fullWidth
+        <Grid size={standardFieldSize}>
+          <TextFormField
+            label="Number of Guests"
+            name="numberOfGuests"
+            type='number'
+            rules={{
+              required: "Must provide a number of guests",
+              min: { value: 1, message: 'Must have at least 1 guest'},
+              max: { value: 20, message: 'Cannot book more than 20 guests per reservation online'}
+            }}
+            control={control}
+            required
+          />
+        </Grid>
+        <Grid size={standardFieldSize}>
+          <TextFormField
             label="Price"
             name="price"
+            type='number'
+            rules={{
+              required: "Must enter a price",
+              min: { value: 0.01, message: 'Price must be greater than 0.01'},
+              max: { value: 100, message: 'Price must be less than or equal to 100'}
+            }}
+            control={control}
             required
-            variant="outlined"
           />
-        </Grid> */}
-        {/* <Grid size={{xs: 12}}>
+        </Grid>
+        <Grid size={standardFieldSize}>
           <Button
             variant="contained"
             component="label"
@@ -80,9 +76,9 @@ export const MenuItemForm = ({}: MenuItemFormProps) => {
               hidden
             />
           </Button>
-        </Grid> */}
-        <Grid>
-          <Button type='submit'>Add Item</Button>
+        </Grid>
+        <Grid size={standardCtaSize}>
+          <Button disabled={!isValid} type='submit'>Add Item</Button>
         </Grid>
       </Grid>
     </form>
