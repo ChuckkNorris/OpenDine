@@ -63,7 +63,7 @@ def run_example_grad() -> Value:
   c = Value(10.0, label='c')
   # c.data +=h
   e = a*b; e.label = 'e'
-  e.data += h
+  # e.data += h
   d = e + c; d.label = 'd'
   # d.data += h
   f = Value(-2.0, label='f')
@@ -114,7 +114,7 @@ draw_dot(l)
 # Draw value nodes2
 
 
-# %%
+
 # Begin back propogation
 # Calculate derivative of a node with respect to other nodes
 # Need to know how weights
@@ -141,5 +141,44 @@ draw_dot(l)
 # dl / de = -2.0
 # dl / da = (dl / de) * (de / da)
 # dl / da = -2.0 * -3.0
-d = 4.00010
-l = -8.0020
+# d = 4.00010
+# l = -8.0020
+# %%
+a = 2
+b = -3
+e = -6
+d = 4
+l = -8
+print('first', (d*d)/(d*c))
+a1 = ((d*l)/(d*e))
+a2 = ((d*e)/(d*a))
+agrad = a1 * a2
+print('a1', a1)
+print('a2', a2)
+
+b1 = ((d*l)/(d*e))
+b2 = ((d*e)/(d*b))
+print('b1', b1)
+print('b2', b2)
+bgrad = ((d*l)/(d*e)) * ((d*e)/(d*b))
+print('bgrad', bgrad)
+# (dl / de) = -2
+
+
+#x1 = (d*e)/(d*a)
+#x2 = (d*e)/(d*b)
+# (de/da) * (de / db)
+y = agrad * bgrad
+print('x1', agrad)
+print('x2', bgrad)
+print('y', y)
+# a.grad = -3
+# b.grad = 2
+# -3, 2
+
+# A.Grad and B.Grad
+#dl / da = (dl / de) * (de / da)
+# (dl / de) = -2
+
+
+# %%
