@@ -4,8 +4,8 @@ import * as restaurantsService from 'modules/restaurants/restaurants.service';
 import { RestaurantDto } from 'modules/restaurants/models/restaurant.model';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { loginRequest } from 'modules/app/auth/auth.config';
-import { Button } from '@mui/material';
-import MenuItemForm from 'modules/menu/menu-item/menu-item.form';
+import { Button, Grid2 } from '@mui/material';
+import MenuItemForm from 'modules/menu/menu-item/menu-item-form.component';
 
 export const restaurantLoader = async () => {
   return restaurantsService.getRestaurants();
@@ -23,6 +23,8 @@ const HomePage = () => {
           })
           .catch((error) => console.log(error));
   };
+
+  const isConsolidated = true;
   
   return (
     <div>
@@ -39,9 +41,9 @@ const HomePage = () => {
                 </Button>
             </UnauthenticatedTemplate>
         </div>
-        <div>
-          <MenuItemForm isConsolidated={false} />
-        </div>
+        <Grid2 sx={{display: isConsolidated ? { xs: 'none', md: 'block' } : {}}}>
+          <MenuItemForm isConsolidated={isConsolidated} />
+        </Grid2>
     </div>
   );
 }
