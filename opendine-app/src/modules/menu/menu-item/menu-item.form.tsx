@@ -30,9 +30,12 @@ export const MenuItemForm = ({ isConsolidated }: MenuItemFormProps) => {
         <Grid size={standardFieldSize}>
           <TextFormField
             name="description"
-            rules={{ required: "Description is required", minLength: { value: 5, message: "Must be 5 chars long" } }}
+            rules={{ 
+              required: "Description is required",
+              minLength: { value: 10, message: "Description must be at least 10 characters" }
+            }}
             control={control}
-            // helperText="Please enter a description"
+            helperText="Description of the menu item"
             label="Description"
           />
         </Grid>
